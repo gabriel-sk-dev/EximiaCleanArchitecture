@@ -1,0 +1,51 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eximia.CleanArchitecture.WebAPI", "Eximia.CleanArchitecture.WebAPI\Eximia.CleanArchitecture.WebAPI.csproj", "{998FF424-772D-4F6E-9C9C-E733C6739E7E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "deploy", "deploy", "{D3599134-A318-4841-8093-9FE71C895AA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "continuous-integration", "continuous-integration", "{272FA37A-CFD0-4187-AAF9-B88A76F63F8C}"
+	ProjectSection(SolutionItems) = preProject
+		..\eximia-cleanarchitecture-pipeline.yml = ..\eximia-cleanarchitecture-pipeline.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Avaliacoes", "Avaliacoes", "{EE6C6633-DD5F-4873-9129-37B1346720BF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eximia.CleanArchitecture.Avaliacoes", "Eximia.CleanArchitecture.Avaliacoes\Eximia.CleanArchitecture.Avaliacoes.csproj", "{289005DE-ECB6-4D2A-9BD3-AC65141F2489}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eximia.CleanArchitecture.Avaliacoes.Tests", "Eximia.CleanArchitecture.Avaliacoes.Tests\Eximia.CleanArchitecture.Avaliacoes.Tests.csproj", "{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{998FF424-772D-4F6E-9C9C-E733C6739E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{998FF424-772D-4F6E-9C9C-E733C6739E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{998FF424-772D-4F6E-9C9C-E733C6739E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{998FF424-772D-4F6E-9C9C-E733C6739E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{289005DE-ECB6-4D2A-9BD3-AC65141F2489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{289005DE-ECB6-4D2A-9BD3-AC65141F2489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{289005DE-ECB6-4D2A-9BD3-AC65141F2489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{289005DE-ECB6-4D2A-9BD3-AC65141F2489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{998FF424-772D-4F6E-9C9C-E733C6739E7E} = {D3599134-A318-4841-8093-9FE71C895AA5}
+		{289005DE-ECB6-4D2A-9BD3-AC65141F2489} = {EE6C6633-DD5F-4873-9129-37B1346720BF}
+		{8BA6351D-8AC0-4256-8C4B-0AF980EEE9B4} = {EE6C6633-DD5F-4873-9129-37B1346720BF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {72BDE3AB-21E5-4817-B06C-9B5E525FAC50}
+	EndGlobalSection
+EndGlobal
