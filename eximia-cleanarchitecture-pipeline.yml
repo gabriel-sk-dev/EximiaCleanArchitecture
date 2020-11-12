@@ -1,0 +1,93 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: Comum
+  - group: Society360-Azure-MPN
+  - group: Terraform-StateManager
+  - name: buildConfiguration
+    value: 'Release'    
+
+steps:
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 3.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: 'dotnet restore'
+  inputs:
+    command: 'restore'
+    projects: |
+      src/Eximia.CleanArchitecture.WebAPI/Eximia.CleanArchitecture.WebAPI.csproj
+      src/Eximia.CleanArchitecture.Testes/Eximia.CleanArchitecture.Testes.csproj
+    feedsToUse: 'select'
+    vstsFeed: '$(POSITIVO_NUGET)'
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: 'dotnet test'
+  inputs:
+    command: 'test'
+    projects: 'src/Eximia.CleanArchitecture.Testes/Eximia.CleanArchitecture.Testes.csproj'
+    arguments: '--configuration $(buildConfiguration) --no-restore'
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: 'dotnet build'
+  inputs:
+    command: 'build'
+    projects: |
+        src/Eximia.CleanArchitecture.WebAPI/Eximia.CleanArchitecture.WebAPI.csproj
+    arguments: '--configuration $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  enabled: true
+  displayName: 'dotnet publish'
+  inputs:
+    command: 'publish'
+    publishWebProjects: false
+    projects: 'src/Eximia.CleanArchitecture.WebAPI/Eximia.CleanArchitecture.WebAPI.csproj'
+    arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)/webapi'
+    zipAfterPublish: True
+
+- task: PowerShell@2
+  displayName: Git clone TerraForm Infra repo
+  inputs:
+    targetType: inline
+    script: git clone https://$(INFRA_GIT_USER):$(INFRA_GIT_SENHA)@stisociety.visualstudio.com/DefaultCollection/STI.Society360/_git/STI.Infraestrutura.Deployment --branch master --progress $(Build.Repository.LocalPath)/terraform
+
+- task: CopyFiles@2
+  displayName: Copy Infra Terraform modules
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)/terraform/Modulos'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/terraform/Modulos'
+    CleanTargetFolder: false
+
+- task: CopyFiles@2
+  displayName: Copy Infra Terraform Contextos
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)/terraform/Contextos'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/terraform/Contextos'
+    CleanTargetFolder: false
+    
+- task: CopyFiles@2
+  displayName: Copy Infra Terraform Stage
+  inputs:
+    SourceFolder: '$(Build.Repository.LocalPath)/terraform/Stage'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/terraform/Stage'
+    CleanTargetFolder: false
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: CleanArchitectureDeploy
